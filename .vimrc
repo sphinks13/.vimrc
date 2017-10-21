@@ -1,37 +1,50 @@
-" Specify a directory for plugins
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('C:/vimfiles/plugin')
+if has('mac')
+    let plugin_folder = '~/.vim/plugged'
+elseif has('win32') || has('win64')
+    let plugin_folder = 'C:/vimfiles/plugin'
+endif
+
+let &runtimepath.=','.plugin_folder.'/ack.vim'
+let &runtimepath.=','.plugin_folder.'/ctrlp.vim'
+let &runtimepath.=','.plugin_folder.'/syntastic-local-jsonlint.vim'
+
+call plug#begin(plugin_folder)
     Plug 'altercation/vim-colors-solarized'
     Plug 'vim-airline/vim-airline'
-    Plug 'scrooloose/nerdcommenter'
-    Plug 'scrooloose/syntastic'
-    Plug 'tpope/vim-surround'
-    Plug 'junegunn/vim-easy-align'
     Plug 'terryma/vim-multiple-cursors'
+    Plug 'tpope/vim-surround'
+    Plug 'scrooloose/nerdcommenter'
+
+    Plug 'mhinz/vim-signify'
+    Plug 'scrooloose/syntastic'
+    Plug 'mtscout6/syntastic-local-eslint.vim'
+
     Plug 'othree/html5.vim'
     Plug 'othree/yajs.vim'
-    Plug 'hail2u/vim-css3-syntax'
-    Plug 'cakebaker/scss-syntax.vim'
     Plug 'othree/javascript-libraries-syntax.vim'
-    Plug 'mtscout6/syntastic-local-eslint.vim'
     Plug 'ternjs/tern_for_vim'
     Plug 'maksimr/vim-jsbeautify'
-    Plug 'mhinz/vim-signify'
-    Plug 'elzr/vim-json'
+    Plug 'hail2u/vim-css3-syntax'
+    Plug 'cakebaker/scss-syntax.vim'
 call plug#end()
 
-syntax enable
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=l  "remove left-hand scroll bar
+set guifont=losevka:h11
+
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
+
 set background=dark
 colorscheme solarized
+
+syntax enable
 set foldmethod=syntax
 set hlsearch
 set hidden
 
 set wildmenu
 set wildmode=longest:full,full
-set guifont=Consolas:h11
 
 set ts=4 sts=4 sw=4 expandtab
 set listchars=tab:>-,space:Â·,eol:Â¶
@@ -60,7 +73,9 @@ let g:netrw_winsize = 25
 " [> ack <]
 " ====================
 
-set runtimepath^=C:\vimfiles\plugin\ack.vim
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
 
 nnoremap ga :Ack!
 
@@ -96,8 +111,6 @@ autocmd FileType css nnoremap <buffer> <c-f> :call CSSBeautify()<cr>
 " [> ctrlp <]
 " ====================
 
-set runtimepath^=C:\vimfiles\plugin\ctrlp.vim
-
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=10
 let g:ctrlp_custom_ignore = '$tf\|.idea\|bower_components\|dist\|node_modules'
@@ -117,11 +130,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 
-" ====================
-" [> syntastic-local-jsonlint.vim <]
-" ====================
-
-set runtimepath^=C:\vimfiles\plugin\syntastic-local-jsonlint.vim
 
 " MAPPINGS
 let g:mapleader = ","
