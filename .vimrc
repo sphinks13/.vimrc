@@ -16,16 +16,16 @@ call plug#begin(plugin_folder)
     Plug 'scrooloose/nerdcommenter'
 
     Plug 'mhinz/vim-signify'
-    Plug 'scrooloose/syntastic'
-    Plug 'mtscout6/syntastic-local-eslint.vim'
+    Plug 'scrooloose/syntastic', {'for': ['json', 'javascript']}
+    Plug 'mtscout6/syntastic-local-eslint.vim', {'for': ['javascript']}
 
-    Plug 'othree/html5.vim'
-    Plug 'othree/yajs.vim'
-    Plug 'othree/javascript-libraries-syntax.vim'
-    Plug 'ternjs/tern_for_vim'
-    Plug 'maksimr/vim-jsbeautify'
-    Plug 'hail2u/vim-css3-syntax'
-    Plug 'cakebaker/scss-syntax.vim'
+    Plug 'othree/html5.vim', {'for': ['html', 'javascript']}
+    Plug 'othree/yajs.vim', {'for': ['html', 'javascript']}
+    Plug 'othree/javascript-libraries-syntax.vim', {'for': ['html', 'javascript']}
+    Plug 'ternjs/tern_for_vim', {'for': ['javascript']}
+    Plug 'maksimr/vim-jsbeautify', {'for': ['html', 'javascript']}
+    Plug 'hail2u/vim-css3-syntax', {'for': ['css', 'html']}
+    Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
 call plug#end()
 
 set guioptions-=r  "remove right-hand scroll bar
@@ -53,11 +53,7 @@ set listchars=tab:>-,space:Â·,eol:Â¶
 set number relativenumber
 
 " ignore folders
-set wildignore+=$tf/**
-set wildignore+=.idea/**
-set wildignore+=bower_components/**
-set wildignore+=dist/**
-set wildignore+=node_modules/**
+set wildignore+=$tf/**,.idea/**,bower_components/**,dist/**,node_modules/**,*.so,*.swp,*.zip,*.exe
 
 " ====================
 " [> netrw <]
