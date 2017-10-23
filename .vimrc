@@ -30,7 +30,7 @@ call plug#end()
 
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=l  "remove left-hand scroll bar
-set guifont=losevka:h11
+set guifont=iosevka:h11
 
 set encoding=utf-8  " The encoding displayed.
 set fileencoding=utf-8  " The encoding written to file.
@@ -47,7 +47,7 @@ set wildmenu
 set wildmode=longest:full,full
 
 set ts=4 sts=4 sw=4 expandtab
-set listchars=tab:>-,space:Â·,eol:Â¶
+set listchars=tab:>-,space:·,eol:¶
 
 " show line numbers
 set number relativenumber
