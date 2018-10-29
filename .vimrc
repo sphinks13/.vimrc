@@ -10,10 +10,10 @@ let &runtimepath.=','.plugin_folder.'/syntastic-local-jsonlint.vim'
 
 call plug#begin(plugin_folder)
     Plug 'altercation/vim-colors-solarized'
-    Plug 'vim-airline/vim-airline'
-    Plug 'terryma/vim-multiple-cursors'
+    Plug 'tpope/vim-abolish'
     Plug 'tpope/vim-surround'
     Plug 'scrooloose/nerdcommenter'
+    Plug 'junegunn/vim-peekaboo'
 
     Plug 'mhinz/vim-signify'
     Plug 'scrooloose/syntastic', {'for': ['json', 'javascript']}
@@ -23,25 +23,29 @@ call plug#begin(plugin_folder)
     Plug 'othree/yajs.vim', {'for': ['html', 'javascript']}
     Plug 'othree/javascript-libraries-syntax.vim', {'for': ['html', 'javascript']}
     Plug 'ternjs/tern_for_vim', {'for': ['javascript']}
-    Plug 'maksimr/vim-jsbeautify', {'for': ['html', 'javascript']}
+    Plug 'maksimr/vim-jsbeautify', {'for': ['html', 'javascript', 'json']}
     Plug 'hail2u/vim-css3-syntax', {'for': ['css', 'html']}
     Plug 'cakebaker/scss-syntax.vim', {'for': ['scss']}
+    Plug 'mattn/emmet-vim', {'for': ['css', 'scss', 'html', 'js']}
 call plug#end()
 
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
-set guioptions-=l  "remove left-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
 set guifont=iosevka:h11
 
 set encoding=utf-8  " The encoding displayed.
+set fileformat=unix
 set fileencoding=utf-8  " The encoding written to file.
 
 set background=dark
 colorscheme solarized
 
 syntax enable
-set foldmethod=syntax
 set hlsearch
 set hidden
+set foldmethod=manual
 
 set wildmenu
 set wildmode=longest:full,full
@@ -53,7 +57,12 @@ set listchars=tab:>-,space:·,eol:¶
 set number relativenumber
 
 " ignore folders
-set wildignore+=$tf/**,.idea/**,bower_components/**,dist/**,node_modules/**,*.so,*.swp,*.zip,*.exe
+set wildignore+=$tf/**,.git/**,.idea/**,bower_components/**,dist/**,node_modules/**,*.so,*.swp,*.zip,*.exe
+
+" status line
+set laststatus=2
+
+set statusline=%<%f\ %h%m%r%y\ %{(&fenc!=''?&fenc:&enc)}\ %{(&bomb?\",BOM\ \":\"\")}%{&ff}%=%{v:register}\ %-14.(%l,%c%V%)\ %P
 
 " ====================
 " [> netrw <]
@@ -64,6 +73,10 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
+
+" ====================
+" [> vim-peekaboo <]
+" ====================
 
 " ====================
 " [> ack <]
@@ -109,19 +122,14 @@ autocmd FileType css nnoremap <buffer> <c-f> :call CSSBeautify()<cr>
 
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=10
-let g:ctrlp_custom_ignore = '$tf\|.idea\|bower_components\|dist\|node_modules'
+let g:ctrlp_custom_ignore = '$tf\|.git\|.idea\|bower_components\|dist\|node_modules'
 
 " ====================
 " [> syntactic <]
 " ====================
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_enable_signs=1
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
